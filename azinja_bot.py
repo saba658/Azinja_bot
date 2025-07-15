@@ -231,6 +231,41 @@ def help_msg(message):
             "– مشخصات، اصالت، عکس و لینک‌های ارتباطی محصول رو دریافت کنی\n"
             "– و با اطمینان خرید کنی 😇"
         )
+        from flask import Flask, request
+
+app = Flask(name)
+
+@app.route('/', methods=['POST'])
+def webhook():
+    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+    return "OK", 200
+
+@app.route('/', methods=['GET'])
+def index():
+    return "Bot is running!", 200
+
+bot.remove_webhook()
+bot.set_webhook(url='https://azinja-service.onrender.com/')
+
+from flask import Flask, request
+
+app = Flask(name)
+
+@app.route('/', methods=['POST'])
+def receive_update():
+    update = telebot.types.Update.de_json(request.stream.read().decode("utf-8"))
+    bot.process_new_updates([update])
+    return "Update received", 200
+
+@app.route('/', methods=['GET'])
+def index():
+    return "Bot is running with webhook. Polling is disabled.", 200
+
+# حذف Webhook قبلی، در صورت وجود
+bot.remove_webhook()
+
+# فعال‌سازی Webhook جدید مطابق دامنه سرویس در Render
+bot.set_webhook(url='https://azinja-service.onrender.com/')
         
     else:
         bot.send_message(message.chat.id,
