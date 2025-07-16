@@ -269,7 +269,8 @@ bot.set_webhook(url='https://azinja-service.onrender.com/')
 
 bot.remove_webhook()
 bot.set_webhook(url='http://azinja-service.onrender.com/')
-    else:
+   
+else:
         bot.send_message(message.chat.id,
            "📌 Bot usage guide:\n\n"
             "🛒 If you're a seller:\n"
