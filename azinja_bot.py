@@ -306,6 +306,41 @@ if name == 'main':
 @app.route('/', methods=['GET'])
 def index():
     return "Bot is running with webhook", 200
+
+from flask import Flask, request
+import telebot
+
+# 🔐 توکن ربات تلگرام
+TOKEN = '7605066032:AAF85-L4AWV2XoRsJUY-BvaERvJIuykderU'
+bot = telebot.TeleBot(TOKEN)
+
+# 🚀 ایجاد اپ Flask
+app = Flask(name)
+
+# 📥 هندلر برای پیام شروع
+@bot.message_handler(commands=['start'])
+def welcome_message(message):
+    bot.send_message(message.chat.id, "سلام سابا! رباتت الآن با موفقیت فعال شده 😊")
+
+# 📡 مسیر دریافت پیام از تلگرام
+@app.route('/', methods=['POST'])
+def receive_message():
+    update = telebot.types.Update.de_json(request.stream.read().decode("utf-8"))
+    bot.process_new_updates([update])
+    return "Message received", 200
+
+# ✅ مسیر health check برای Render (خیلی مهم!)
+@app.route('/', methods=['GET'])
+def index():
+    return "Bot is running with webhook", 200
+
+# 🌐 فعال‌سازی Webhook با آدرس سرور Render
+bot.remove_webhook()
+bot.set_webhook(url='https://azinja-service.onrender.com/')
+
+# 🧠 اجرای Flask در پورت 5000
+if name == 'main':
+    app.run(host='0.0.0.0', port=5000)
     
 else:
         bot.send_message(message.chat.id,
