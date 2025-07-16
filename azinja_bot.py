@@ -269,7 +269,40 @@ bot.set_webhook(url='https://azinja-service.onrender.com/')
 
 bot.remove_webhook()
 bot.set_webhook(url='http://azinja-service.onrender.com/')
-   
+ 
+from flask import Flask, request
+import telebot
+
+TOKEN = '7605066032:AAF85-L4AWV2XoRsJUY-BvaERvJIuykderU'
+bot = telebot.TeleBot(TOKEN)
+
+app = Flask(name)
+
+# هندلر برای دستور /start
+@bot.message_handler(commands=['start'])
+def send_welcome(message):
+    bot.reply_to(message, "سلام سابا! رباتت الان فعاله 😊")
+
+# مسیر دریافت پیام‌ها از تلگرام
+@app.route('/', methods=['POST'])
+def webhook():
+    update = telebot.types.Update.de_json(request.stream.read().decode("utf-8"))
+    bot.process_new_updates([update])
+    return "OK", 200
+
+# مسیر تست برای health check
+@app.route('/', methods=['GET'])
+def index():
+    return "Bot is running with webhook", 200
+
+# فعال‌سازی Webhook
+bot.remove_webhook()
+bot.set_webhook(url='https://azinja-service.onrender.com/')
+
+# اجرای Flask
+if name == 'main':
+    app.run(host='0.0.0.0', port=5000)
+    
 else:
         bot.send_message(message.chat.id,
            "📌 Bot usage guide:\n\n"
