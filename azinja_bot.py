@@ -188,7 +188,7 @@ def save_location(message, store_name=None):
         conn.close()
         bot.send_message(message.chat.id, f"✅ موقعیت فروشگاه «{store_name}» ثبت شد.")
     else:
-        bot.send_message(message.chat.id, "
+        bot.send_message(message.chat.id, ")
 
 if store:
     name, map_url, lat, lon = store
