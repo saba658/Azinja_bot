@@ -266,10 +266,12 @@ bot.remove_webhook()
 
 # فعال‌سازی Webhook جدید مطابق دامنه سرویس در Render
 bot.set_webhook(url='https://azinja-service.onrender.com/')
-        
+
+bot.remove_webhook()
+bot.set_webhook(url='http://azinja-service.onrender.com/')
     else:
         bot.send_message(message.chat.id,
-            "📌 Bot usage guide:\n\n"
+           "📌 Bot usage guide:\n\n"
             "🛒 If you're a seller:\n"
             "– Use '📦 Register product' to showcase your item\n"
             "– Send photo, video, website & Instagram links\n"
