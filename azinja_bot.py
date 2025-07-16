@@ -7,7 +7,7 @@ import requests
 # توکن و کلید نقشه از محیط اجرا (Render یا GitHub)
 TOKEN = os.getenv("TOKEN")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-bot = telebot.TeleBot(TOKEN)
+bot = telebot.TeleBot(TOKEN, threaded=False)
 
 # زبان انتخاب‌شده برای هر کاربر
 user_lang = {}
