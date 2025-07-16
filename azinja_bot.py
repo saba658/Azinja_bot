@@ -302,6 +302,10 @@ bot.set_webhook(url='https://azinja-service.onrender.com/')
 # اجرای Flask
 if name == 'main':
     app.run(host='0.0.0.0', port=5000)
+
+@app.route('/', methods=['GET'])
+def index():
+    return "Bot is running with webhook", 200
     
 else:
         bot.send_message(message.chat.id,
